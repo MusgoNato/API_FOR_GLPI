@@ -1,0 +1,15 @@
+{
+    "name": "hugoj/api-glpi",
+    "autoload": {
+        "psr-4": {
+            "src\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hugo Josué lema das neves",
+            "email": "131496781+MusgoNato@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
