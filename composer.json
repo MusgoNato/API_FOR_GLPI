@@ -11,5 +11,8 @@
             "email": "131496781+MusgoNato@users.noreply.github.com"
         }
     ],
-    "require": {}
+    "require": {
+        "longman/telegram-bot": "^0.83.1",
+        "vlucas/phpdotenv": "^5.6"
+    }
 }
