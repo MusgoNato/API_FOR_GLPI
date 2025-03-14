@@ -4,30 +4,71 @@ namespace src\api;
 
 class BotMessagesController
 {
-    public static function sendMessage($InputUserMessage, $chatId)
+    public static function sendMessage($InputUserMessage, $callback, $chatId)
     {
         // Url da api telegram envio de chat
         error_log("Mensagem de usuario: " . $InputUserMessage . " Id do chat: " . $chatId);
 
-
-        if($InputUserMessage === "fazer_pedido")
+        // Caso para escolhas do botão
+        if($callback !== null)
         {
             $responseBot = "Ótimo! Vamos fazer seu pedido.\nEscolha um sabor:";
 
-            $keyboard = 
-            [
-                'inline_keyboard' =>
-                [
+            switch($callback)
+            {
+                case 'fazer_pedido':
+                    $keyboard = 
                     [
-                        ['text' => 'Calabresa', 'callback_data' => 'sabor_calabresa']
-                    ]
-                ] 
-            ];
-            error_log("Opa deu certo aqui, [1]");
+                        'inline_keyboard' =>
+                        [
+                            [
+                                ['text' => 'Calabresa', 'callback_data' => 'sabor_calabresa'],
+                                ['text' => 'Bacon', 'callback_data' => 'sabor_bacon'],
+                                ['text' => 'Queijo', 'callback_data' => 'sabor_queijo'],
+                                ['text' => 'Mussarela', 'callback_data' => 'sabor_mussarela']
+                            ]
+                        ] 
+                    ];
+                    break;
+                
+                case 'sabor_calabresa':
+                case 'sabor_bacon':
+                case 'sabor_queijo':
+                case 'sabor_mussarela':
+
+                    $responseBot = "Qual o tamanho da Pizza?";
+                    $keyboard = 
+                    [
+                        'inline_keyboard' =>
+                        [
+                            [
+                                ['text' => '4 Fatias (P)', 'callback_data' => 'tam_P'],
+                                ['text' => '8 Fatias (M)', 'callback_data' => 'tam_M'],
+                                ['text' => '12 Fatias (G)', 'callback_data' => 'tam_G'],
+                                ['text' => '24 Fatias (GG)', 'callback_data' => 'tam_GG'],
+                            ]
+                        ] 
+                    ];
+                    break;
+
+                case 'tam_P':
+                case 'tam_M':
+                case 'tam_G':
+                case 'tam_GG':
+                   
+                    $responseBot = "Seu pedido foi entregue e deve chegar em breve 🏍️. Muito obrigado 🫂";
+                    $keyboard = null;
+                    break;
+                default:
+                    error_log("This is default message (Caabreasa)" . $callback);
+                    break;
+            }
         }
-        else
+            
+        // Caso para inputs do usuario
+        if($InputUserMessage !== null)
         {
-            $responseBot = "Bem vindo ao atendimento do BOT da pizza🍕🤖\nInsira uma das opções abaixo\n[1] - Fazer Pedido\n[2] - Acompanhar pedido\n";
+            $responseBot = "Bem vindo ao atendimento do BOT da pizza🍕🤖\nInsira uma das opções abaixo\n";
 
             // Botoes
             $keyboard = 
@@ -35,8 +76,7 @@ class BotMessagesController
                 'inline_keyboard' =>
                 [ 
                     [
-                        ['text' => '1 - Fazer pedido', 'callback_data' => 'fazer_pedido'],
-                        ['text' => '2 - Acompanhar pedido', 'callback_data' => 'acompanhar_pedido']
+                        ['text' => 'Fazer pedido', 'callback_data' => 'fazer_pedido'],
                     ]
                 ]
             ];

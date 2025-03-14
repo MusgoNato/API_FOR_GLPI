@@ -27,14 +27,21 @@ $raw = file_get_contents("php://input");
 $InputUserTelegramData = json_decode($raw);
 if(!empty($InputUserTelegramData))
 {
-    error_log("Mensagem separada: " . json_encode($InputUserTelegramData->message->text));
+    if(isset($InputUserTelegramData->callback_query))
+    {
+        error_log("\n--------------- Atualização do bot (callbacks): \n" . json_encode($InputUserTelegramData->callback_query) . "\n-------------\n");
+        BotMessagesController::sendMessage( null, $InputUserTelegramData->callback_query->data, $InputUserTelegramData->callback_query->message->chat->id);
+    }
+    error_log("\n--------------- Mensagem separada: \n" . json_encode($InputUserTelegramData) . "\n------------\n");
 }
 
 // Aqui retornaria menu
 if(isset($InputUserTelegramData->message->text))
 {
-    BotMessagesController::sendMessage($InputUserTelegramData->message->text, $InputUserTelegramData->message->from->id);
+    BotMessagesController::sendMessage($InputUserTelegramData->message->text, null, $InputUserTelegramData->message->from->id);
 }
+
+
 
 
 // error_log(json_encode($InputUserTelegramData->message->from->id));
