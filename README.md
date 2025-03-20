@@ -53,13 +53,14 @@ Execute o servidor PHP localmente para testar o bot.
 php -S localhost:8000 -t public
 
 ```
+---
 ### 4. Expor localhost com ngrok para WEBHOOK
 Faça o download do ngrok em sua máquina e deixe seu localhost exposto remotamente, para uso da webhook.
 
 - ngrok ngrok config add-authtoken seu_token_aqui. 
 - ngrok http 8000 (Se estiver rodando em outra porta com php -S, insira ela).
 - No arquivo .env, insira a url gerada pelo ngrok
-
+---
 ### 5. Resolução de Problemas
 Bot não responde no Telegram?
 - Verifique se a URL do Ngrok está correta no .env.
