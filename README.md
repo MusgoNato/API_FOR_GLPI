@@ -3,6 +3,8 @@
 Bem-vindo ao guia de configuração do **Bot de Pedidos de Pizza**! Este documento explica como configurar o ambiente localmente e integrá-lo ao Telegram e ao GLPI. Siga os passos abaixo cuidadosamente para garantir que tudo funcione como esperado.
 
 ---
+### Integração com GLPI ainda em desenvolvimento
+---
 
 ## Pré-requisitos
 
