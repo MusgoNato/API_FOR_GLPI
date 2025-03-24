@@ -45,6 +45,12 @@ class BotMessagesController
      */
     public static function sendMessage($InputUserMessage, $callback, $chatId)
     {
+        if($InputUserMessage == 'ticket')
+        {
+            TicketController::getAllTickets();
+            exit;
+        }
+        
         // Carregando o arquivo
         $userData = self::loadState($chatId);
         $state = $userData['state'];
@@ -55,6 +61,17 @@ class BotMessagesController
 
         $responseBot = "";
         $keyboard = null;
+
+        if($callback === null)
+        {   
+            $callback = "0";
+            $keyboard = 
+            [
+                [
+                    ['text' => 'Fazer Pedido', 'callback_data' => 'fazer_pedido'],
+                ]
+            ];
+        }
 
         // Casos para os estados do usuario
         switch($state)
@@ -169,6 +186,22 @@ class BotMessagesController
                     // Para debug
                     error_log("Tamanho escolhido: $tamanho | Novo estado: $state");
                 }
+                else
+                {
+                    $responseBot = "Por favor escolha o tamanho da pizza!";
+                    $keyboard = 
+                    [
+                        'inline_keyboard' => 
+                        [
+                            [
+                                ['text' => 'P (4 Fatias)', 'callback_data' => 'tamanho_p'],
+                                ['text' => 'M (8 Fatias)', 'callback_data' => 'tamanho_m'],
+                                ['text' => 'G (12 Fatias)', 'callback_data' => 'tamanho_g'],
+                                ['text' => 'GG (24 Fatias)', 'callback_data' => 'tamanho_gg'],
+                            ]
+                        ]
+                    ];
+                }
                 break;
 
             case 'escolhendo_pagamento':
@@ -184,6 +217,23 @@ class BotMessagesController
                     
                     // Para debug
                     error_log("Pagamento escolhido: $pagamento | Novo estado: $state");
+                }
+                else
+                {
+                    $responseBot = "Por favor escolha um tipo de pagamento";
+                    $keyboard = 
+                    [
+                        'inline_keyboard' => 
+                        [
+                            [
+                                ['text' => 'PIX', 'callback_data' => 'pagamento_pix'],
+                                ['text' => 'DÉBITO', 'callback_data' => 'pagamento_debito'],
+                                ['text' => 'CRÉDITO', 'callback_data' => 'pagamento_credito'],
+                                ['text' => 'DINHEIRO', 'callback_data' => 'pagamento_dinheiro'],
+                            ]
+                        ]
+                    ];
+
                 }
                 break;
 

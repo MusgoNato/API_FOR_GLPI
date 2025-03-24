@@ -5,8 +5,12 @@ namespace src\api;
 class InitSessionController
 {
 
-    public static function getSessionToken($URL_API, $APP_TOKEN, $USER, $PASS)
+    public static function getSessionToken()
     {
+        $USER = $_ENV['GLPI_USER'];
+        $PASS = $_ENV['GLPI_PASS'];
+        $URL_API = $_ENV['GLPI_API_INIT_URL'];
+        $APP_TOKEN = $_ENV['GLPI_APP_TOKEN'];
 
         // Codifica login e senha em Base64
         $auth = base64_encode("$USER:$PASS");

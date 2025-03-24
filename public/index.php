@@ -30,7 +30,7 @@ $dotenv = Dotenv::createImmutable(dirname(__DIR__, 1));
 $dotenv->load();
 
 // Inicia a sessao no glpi
-$response = InitSessionController::getSessionToken($_ENV['GLPI_API_INIT_URL'], $_ENV['GLPI_APP_TOKEN'], $_ENV['GLPI_USER'], $_ENV['GLPI_PASS']);
+$response = InitSessionController::getSessionToken();
 $session_token = $response->session_token;
 
 // Conecta a webhook (Executar apenas uma vez, depois comentar)

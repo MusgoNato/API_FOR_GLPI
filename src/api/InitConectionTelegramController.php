@@ -4,9 +4,6 @@ namespace src\api;
 
 use Exception;
 
-define("TOKEN_BOT_TELEGRAM", "7929845389:AAHJLJ5O0fzzTupg1cikJAkSPY4PNl3xrgY");
-define("URL_BOT_TELEGRAM", "https://api.telegram.org/bot" . TOKEN_BOT_TELEGRAM . "/");
-
 class InitConectionTelegramController
 {
     public static function initWebhookTelegram()
